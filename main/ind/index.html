@@ -1,0 +1,643 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Your Name — Portfolio</title>
+    <meta
+      name="description"
+      content="Professional portfolio of Your Name: experience, education, projects, and contact."
+    />
+    <link
+      rel="icon"
+      type="image/svg+xml"
+      href="../../media-global/mai-kat.svg"
+    />
+    <style>
+      /* ===== Minimal base reset ===== */
+      *,
+      *::before,
+      *::after {
+        box-sizing: border-box;
+      }
+      html {
+        -webkit-text-size-adjust: 100%;
+        text-size-adjust: 100%;
+      }
+
+      :root {
+        --bg: #ffffff;
+        --text: #1a1a1a;
+        --muted: #555555;
+        --accent: #0b4f8a;
+        --border: #d0d0d0;
+        --bg-alt: #f5f5f5;
+        --max-width: 780px;
+      }
+
+      body {
+        margin: 0;
+        padding: 0;
+        font-family:
+          -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica,
+          Arial, sans-serif;
+        background: var(--bg);
+        color: var(--text);
+        line-height: 1.6;
+      }
+
+      .container {
+        max-width: var(--max-width);
+        margin: 0 auto;
+        padding: 1.25rem;
+      }
+
+      header.site-header {
+        border-bottom: 1px solid var(--border);
+        padding: 1.5rem 1.25rem;
+        text-align: center;
+      }
+
+      header.site-header h1 {
+        margin: 0 0 0.25rem;
+        font-size: 1.9rem;
+      }
+
+      header.site-header p {
+        margin: 0;
+        color: var(--muted);
+      }
+
+      /* ===== Navigation ===== */
+      nav.main-nav {
+        border-bottom: 1px solid var(--border);
+        background: var(--bg-alt);
+      }
+
+      nav.main-nav ul {
+        list-style: none;
+        margin: 0;
+        padding: 0.75rem 1.25rem;
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.5rem 1rem;
+        max-width: var(--max-width);
+        margin: 0 auto;
+      }
+
+      nav.main-nav a {
+        color: var(--accent);
+        text-decoration: none;
+        font-size: 0.95rem;
+      }
+
+      nav.main-nav a:hover,
+      nav.main-nav a:focus {
+        text-decoration: underline;
+      }
+
+      /* ===== General sections ===== */
+      section {
+        padding: 2rem 1.25rem;
+        border-bottom: 1px solid var(--border);
+        max-width: var(--max-width);
+        margin: 0 auto;
+      }
+
+      section:last-of-type {
+        border-bottom: none;
+      }
+
+      section h2 {
+        font-size: 1.6rem;
+        margin-top: 0;
+        margin-bottom: 1rem;
+        color: var(--accent);
+      }
+
+      section h3 {
+        font-size: 1.3rem;
+        margin-bottom: 0.25rem;
+      }
+
+      /* ===== Fundamental Table Styling ===== */
+      table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-bottom: 1.25rem;
+      }
+
+      table:last-child {
+        margin-bottom: 0;
+      }
+
+      td {
+        padding: 8px;
+        border: 1px solid #ccc;
+        vertical-align: top;
+      }
+
+      td:first-child:not([colspan]) {
+        width: max-content;
+        font-weight: bold;
+      }
+
+      ul.plain {
+        padding-left: 1.25rem;
+        margin: 0;
+      }
+
+      a {
+        color: var(--accent);
+      }
+
+      /* ===== Skills & projects grid: fallback to block if grid not supported ===== */
+      .grid {
+        display: block;
+      }
+
+      @supports (display: grid) {
+        .grid {
+          display: grid;
+          grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+          gap: 1rem;
+        }
+      }
+
+      .card {
+        border: 1px solid var(--border);
+        border-radius: 4px;
+        padding: 1rem;
+        margin-bottom: 1rem;
+      }
+
+      @supports (display: grid) {
+        .card {
+          margin-bottom: 0;
+        }
+      }
+
+      .card h3 {
+        margin-top: 0;
+      }
+      .card img {
+        width: 100%;
+      }
+      .card .img-carousel {
+        border: 1px solid var(--border);
+        border-radius: 4px;
+        width: 100%;
+        height: 16rem;
+        overflow: auto;
+      }
+
+      details {
+        border: 1px solid var(--border);
+        border-radius: 4px;
+        padding: 0.75rem 1rem;
+        margin-bottom: 0.75rem;
+      }
+
+      details summary {
+        cursor: pointer;
+        font-weight: 600;
+      }
+
+      details p {
+        margin-bottom: 0;
+      }
+
+      .btn {
+        display: inline-block;
+        padding: 0.5rem 1rem;
+        border: 1px solid var(--accent);
+        border-radius: 4px;
+        color: var(--accent);
+        text-decoration: none;
+        font-weight: 500;
+        margin: 0.2rem;
+      }
+
+      .btn:hover,
+      .btn:focus {
+        background: var(--accent);
+        color: var(--bg);
+      }
+
+      footer.site-footer {
+        text-align: center;
+        padding: 1.5rem 1.25rem;
+        color: var(--muted);
+        font-size: 0.85rem;
+      }
+
+      .skip-link {
+        position: absolute;
+        left: -999px;
+        top: 0;
+        background: var(--accent);
+        color: #fff;
+        padding: 0.5rem 1rem;
+        z-index: 100;
+      }
+
+      .skip-link:focus {
+        left: 0.5rem;
+        top: 0.5rem;
+      }
+
+      @media print {
+        nav.main-nav,
+        .skip-link {
+          display: none;
+        }
+        body {
+          color: #000;
+          background: #fff;
+        }
+        a {
+          color: #000;
+          text-decoration: underline;
+        }
+        section {
+          border-bottom: 1px solid #999;
+          page-break-inside: avoid;
+        }
+      }
+    </style>
+  </head>
+
+  <body>
+    <a href="#konten" class="skip-link">Skip to content</a>
+
+    <header class="site-header">
+      <h1>Rahman Susilo (Bambang)</h1>
+      <p>Linux Administrator</p>
+    </header>
+
+    <nav class="main-nav" aria-label="Main navigation">
+      <ul>
+        <li><a href="../eng/">View in English</a></li>
+        <li><a href="#perkenalan">Perkenalan</a></li>
+        <li><a href="#pengalamankerja">Pengalaman Kerja</a></li>
+        <li><a href="#pendidikan">Pendidikan</a></li>
+        <li><a href="#sertifikasi">Sertifikasi</a></li>
+        <li><a href="#keahlian">Kemampuan &amp; Kompetensi</a></li>
+        <li><a href="#proyek">Proyek</a></li>
+        <li><a href="#resume">Resume</a></li>
+        <li><a href="#faq">FAQ</a></li>
+        <li><a href="#kontak">Kontak</a></li>
+        <li><a href="#medsos">Media Sosial</a></li>
+        <li><a href="../../">Beranda</a></li>
+      </ul>
+    </nav>
+
+    <main id="konten">
+      <section id="perkenalan" aria-labelledby="perkenalan-judul">
+        <h2 id="perkenalan-judul">Perkenalan</h2>
+        <p>
+          Hai! Perkenalkan, saya mengidentifikasi diri saya bernama Bambang, dan
+          secara administrasi saya diberi nama Rahman Susilo.
+        </p>
+        <p>
+          Saya suka berpikir secara filosofis dan suka mempertanyakan sistem
+          yang sudah ada.
+        </p>
+        <p>
+          Saya sudah hidup 22 tahun, merasakan menjadi siswa Teknologi Komputer
+          dan Jaringan di SMK dan saat ini menempuh pendidikan elektronika di
+          Politeknik elektronika Negeri Surabaya.
+        </p>
+        <p>
+          3 Tahun belajar elektronika membuat saya semakin berminat dalam dunia
+          server, jaringan dan Linux.
+        </p>
+      </section>
+
+      <section id="pengalamankerja" aria-labelledby="pengalaman-judul">
+        <h2 id="pengalaman-judul">Pengalaman Kerja</h2>
+        <table>
+          <tr>
+            <td colspan="2"><strong>Divisi Elektronika</strong></td>
+          </tr>
+          <tr>
+            <td>Instansi:</td>
+            <td>PT Braja Elektrik Motor</td>
+          </tr>
+          <tr>
+            <td>Waktu:</td>
+            <td>21 Juli 2025 - 5 Desember 2025</td>
+          </tr>
+          <tr>
+            <td>Lokasi:</td>
+            <td>Surabaya, Jawa Timur</td>
+          </tr>
+          <tr>
+            <td colspan="2">
+              <ul class="plain">
+                <li>Pencapaian atau proyek penting selama posisi ini.</li>
+              </ul>
+            </td>
+          </tr>
+        </table>
+        <table>
+          <tr>
+            <td colspan="2"><strong>Sales Kredit Multiguna</strong></td>
+          </tr>
+          <tr>
+            <td>Instansi:</td>
+            <td>PT BPD Sultra Cabang Raha</td>
+          </tr>
+          <tr>
+            <td>Waktu:</td>
+            <td>18 Juli 2022 – 07 November 2022</td>
+          </tr>
+          <tr>
+            <td>Lokasi:</td>
+            <td>Kota Raha, Kab. Muna, Sulawesi Tenggara</td>
+          </tr>
+          <tr>
+            <td colspan="2">
+              <ul class="plain">
+                <li>
+                  Deskripsikan pencapaian konkret, gunakan angka bila
+                  memungkinkan.
+                </li>
+                <li>
+                  Tanggung jawab utama yang relevan dengan posisi yang dituju.
+                </li>
+              </ul>
+            </td>
+          </tr>
+        </table>
+      </section>
+
+      <section id="pendidikan" aria-labelledby="pendidikan-judul">
+        <h2 id="pendidikan-judul">Pendidikan</h2>
+
+        <table>
+          <tr>
+            <td colspan="2"><strong>D3 Teknik Elektronika</strong></td>
+          </tr>
+          <tr>
+            <td>Instansi:</td>
+            <td>Politeknik elektronika Negeri Surabaya</td>
+          </tr>
+          <tr>
+            <td>Waktu:</td>
+            <td>2023 – Sekarang</td>
+          </tr>
+          <tr>
+            <td>Lokasi:</td>
+            <td>Surabaya, Jawa Timur</td>
+          </tr>
+          <tr>
+            <td colspan="2">
+              Mempelajari dasar elektronika, sistem embedded, dan pemrograman
+              mikrokontroler. Latar belakang ini menjadi dasar ketertarikan saya
+              pada embedded development dan IoT, yang kini saya gabungkan dengan
+              software development.
+            </td>
+          </tr>
+        </table>
+
+        <table>
+          <tr>
+            <td colspan="2"><strong>Teknik Komputer dan Jaringan</strong></td>
+          </tr>
+          <tr>
+            <td>Instansi:</td>
+            <td>SMK Negeri 7 Muna</td>
+          </tr>
+          <tr>
+            <td>Waktu:</td>
+            <td>2021 – 2023</td>
+          </tr>
+          <tr>
+            <td>Lokasi:</td>
+            <td>Kontunaga, Muna, Sulawesi Tenggara</td>
+          </tr>
+          <tr>
+            <td colspan="2">Ngoding Mikrotik Jir</td>
+          </tr>
+        </table>
+      </section>
+
+      <section id="sertifikasi" aria-labelledby="sertifikasi-judul">
+        <h2 id="sertifikasi-judul">Sertifikasi</h2>
+
+        <table>
+          <tr>
+            <td colspan="2">
+              <strong>PENS English Proficiency Test (PEPT)</strong>
+            </td>
+          </tr>
+          <tr>
+            <td>Penerbit:</td>
+            <td>PENS Language and Culture Center</td>
+          </tr>
+          <tr>
+            <td>Waktu:</td>
+            <td>31 Maret 2026</td>
+          </tr>
+          <tr>
+            <td>Lokasi:</td>
+            <td>Ruang TC203 PENS, Surabaya, Jawa Timur</td>
+          </tr>
+          <tr>
+            <td colspan="2">
+              <a href="#" target="_blank"><i>Lihat Sertifikat</i></a>
+            </td>
+          </tr>
+        </table>
+      </section>
+
+      <section id="keahlian" aria-labelledby="keahlian-judul">
+        <h2 id="keahlian-judul">Kemampuan &amp; Kompetensi</h2>
+        <div class="grid">
+          <div class="card">
+            <h3>Tools &amp; Platforms</h3>
+            <h4>Development</h4>
+            <ul>
+              <li>Git</li>
+              <li>Codeberg</li>
+              <li>Podman</li>
+              <li>Docker</li>
+              <li>VS Codium</li>
+              <li>Helix (CLI Text Editor)</li>
+              <li>PlatfromIO</li>
+            </ul>
+            <h4>System & Infrastructure</h4>
+            <ul>
+              <li>Linux Fedora 44 (Daily Driver)</li>
+              <li>Linux Ubuntu Server 26.04 (Homelab)</li>
+            </ul>
+            <h4>Content Creation</h4>
+            <ul>
+              <li>Inkscape (Vector Editor)</li>
+              <li>KdenLive (Video Editor)</li>
+              <li>OBS (Open Broadcaster Software)</li>
+            </ul>
+            <h4>Productivity</h4>
+            <ul>
+              <li>OnlyOffice</li>
+            </ul>
+          </div>
+          <div class="card">
+            <h3>Electronics &amp; Embedded</h3>
+            <ul>
+              <li>Mikrokontroler (ESP32, Arduino Mega)</li>
+            </ul>
+          </div>
+          <div class="card">
+            <h3>System & Infrastructure</h3>
+            <ul>
+              <li></li>
+            </ul>
+          </div>
+        </div>
+      </section>
+
+      <section id="proyek" aria-labelledby="proyek-judul">
+        <h2 id="proyek-judul">Proyek</h2>
+        <div class="grid">
+          <div class="card">
+            <h3>Running LED</h3>
+            <div class="img-carousel">
+              <img src="../../media-global/gambar-uji.jpg" alt="gambar uji" />
+              <img src="../../media-global/gambar-uji.jpg" alt="gambar uji" />
+              <img src="../../media-global/gambar-uji.jpg" alt="gambar uji" />
+              <img src="../../media-global/gambar-uji.jpg" alt="gambar uji" />
+            </div>
+            <p>Rancangan tangan sendiri</p>
+            <p>
+              <a href="#"><i>Lihat detail</i></a>
+            </p>
+          </div>
+
+          <div class="card">
+            <h3>Trainer Kit Motor Listrik</h3>
+            <div class="img-carousel">
+              <img src="../../media-global/gambar-uji.jpg" alt="gambar uji" />
+              <img src="../../media-global/gambar-uji.jpg" alt="gambar uji" />
+              <img src="../../media-global/gambar-uji.jpg" alt="gambar uji" />
+              <img src="../../media-global/gambar-uji.jpg" alt="gambar uji" />
+            </div>
+            <p>Brief description of the second project.</p>
+            <p>
+              <a href="#"><i>Lihat detail</i></a>
+            </p>
+          </div>
+
+          <div class="card">
+            <h3>Aplikasi GUI pembaca UART</h3>
+            <div class="img-carousel">
+              <img src="../../media-global/gambar-uji.jpg" alt="gambar uji" />
+              <img src="../../media-global/gambar-uji.jpg" alt="gambar uji" />
+              <img src="../../media-global/gambar-uji.jpg" alt="gambar uji" />
+              <img src="../../media-global/gambar-uji.jpg" alt="gambar uji" />
+            </div>
+            <p>Brief description of the second project.</p>
+            <p>
+              <a href="#"><i>Lihat detail</i></a>
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <section id="resume" aria-labelledby="resume-judul">
+        <h2 id="resume-judul">Resume</h2>
+        <p>
+          Download the full resume in PDF format (most universal, can be opened
+          without special applications).
+        </p>
+        <a class="btn" href="../../resume/ind/">Lihat Resume (PDF)</a>
+        <a
+          class="btn"
+          href="../../resume/ind/resume-rahman-susilo-ind.pdf"
+          download
+          >Unduh Resume (PDF)</a
+        >
+      </section>
+
+      <section id="faq" aria-labelledby="faq-judul">
+        <h2 id="faq-judul">FAQ</h2>
+
+        <details>
+          <summary>Apakah Anda tersedia untuk proyek freelance?</summary>
+          <p>Jawab pertanyaan ini sesuai kondisi Anda.</p>
+        </details>
+
+        <details>
+          <summary>Teknologi apa yang paling Anda kuasai?</summary>
+          <p>Jawaban singkat mengarahkan ke bagian Keahlian di atas.</p>
+        </details>
+      </section>
+
+      <section id="kontak" aria-labelledby="kontak-judul">
+        <h2 id="kontak-judul">Kontak</h2>
+        <ul class="plain">
+          <li>
+            Email:
+            <a href="mailto:bambang11225588@tutamail.com">
+              bambang11225588@tutamail.com
+            </a>
+          </li>
+          <li>
+            LinkedIn:
+            <a href="https://www.linkedin.com/in/labambangpunto/"
+              >linkedin.com/in/labambangpunto</a
+            >
+          </li>
+          <li>
+            Repository:
+            <a href="https://codeberg.org/labambangpunto/">
+              codeberg.org/labambangpunto/</a
+            >
+          </li>
+        </ul>
+      </section>
+
+      <section id="medsos">
+        <h2>Link Lainnya</h2>
+        <ul class="plain">
+          <li>
+            Codeberg:
+            <a href="https://codeberg.org/labambangpunto"
+              >codeberg.org/labambangpunto</a
+            >
+          </li>
+          <li>
+            Youtube:
+            <a href="https://www.youtube.com/@BambangKuliah"
+              >youtube.com/@BambangKuliah</a
+            >
+          </li>
+          <li>
+            Instagram:
+            <a href="https://www.instagram.com/labambangpunto"
+              >instagram.com/labambangpunto</a
+            >
+          </li>
+          <li>
+            Blog:
+            <a href="https://labambang-punto.blogspot.com/"
+              >labambang-punto.blogspot.com/</a
+            >
+          </li>
+          <li>
+            Web:
+            <a href="https://bambangpens.kesug.com/">bambangpens.kesug.com/</a>
+          </li>
+        </ul>
+      </section>
+    </main>
+
+    <footer class="site-footer">
+      <p>
+        &copy; 2026 Bambang. AI membuatkan HTML &amp; CSS murni, sementara isi
+        web saya ketik sendiri.
+      </p>
+    </footer>
+  </body>
+</html>
