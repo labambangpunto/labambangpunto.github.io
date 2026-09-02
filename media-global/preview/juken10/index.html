@@ -1,0 +1,44 @@
+<!doctype html>
+<html lang="id">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Pratinjau Gambar</title>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body {
+        background-color: #1a1a1a;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        min-height: 100vh;
+      }
+
+      .image-container {
+        width: 100%;
+        max-width: 1200px;
+        padding: 20px;
+        display: flex;
+        justify-content: center;
+      }
+
+      .image-viewer {
+        max-width: 100%;
+        max-height: 90vh;
+        width: auto;
+        height: auto;
+        object-fit: contain;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="image-container">
+      <img src="juken10.png" alt="Pratinjau Gambar" class="image-viewer" />
+    </div>
+  </body>
+</html>
