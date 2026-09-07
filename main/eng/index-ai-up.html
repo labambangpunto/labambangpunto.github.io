@@ -1,0 +1,622 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Portofolio Saya (versi stabil)</title>
+    <meta
+      name="description"
+      content="Professional portfolio of Your Name: experience, education, projects, and contact."
+    />
+    <link
+      rel="icon"
+      type="image/svg+xml"
+      href="../../media-global/mai-kat.svg"
+    />
+    <style>
+      /* ===== Minimal base reset ===== */
+      *,
+      *::before,
+      *::after {
+        box-sizing: border-box;
+      }
+      ::selection {
+        background-color: #00f1d0;
+        color: #000000;
+      }
+      html {
+        -webkit-text-size-adjust: 100%;
+        text-size-adjust: 100%;
+      }
+
+      /* Hanya menyimpan ukuran layout di root */
+      :root {
+        --max-width: 780px;
+        font-size: 1.05rem;
+      }
+
+      /* ===== Theme Wrapper (Light Mode Defaults) ===== */
+      .theme-wrapper {
+        --bg: #121212;
+        --text: #e0e0e0;
+        --muted: #aaaaaa;
+        --accent: #00f1d0; /* Warna aksen lebih terang agar kontras */
+        --judul-tabel: #004d40;
+        --border: #333333;
+        --bg-alt: #1e1e1e;
+
+        background: var(--bg);
+        color: var(--text);
+        min-height: 100vh;
+        transition:
+          background-color 0.3s ease,
+          color 0.3s ease;
+      }
+
+      /* ===== Checkbox Hack for Dark Mode ===== */
+      /* Sembunyikan checkbox tapi tetap bisa difokus via keyboard (A11y) */
+      .theme-toggle-checkbox {
+        position: absolute;
+        left: -9999px;
+        opacity: 0;
+      }
+
+      /* Jika checkbox dicentang, timpa variabel warna menjadi Dark Mode */
+      .theme-toggle-checkbox:checked ~ .theme-wrapper {
+        --bg: #ffffff;
+        --text: #000000;
+        --muted: #555555;
+        --accent: #007f6f;
+        --judul-tabel: #caf1ec;
+        --border: #d0d0d0;
+        --bg-alt: #f5f5f5;
+      }
+
+      /* Indikator visual ketika checkbox mendapat fokus dari keyboard (tombol Tab) */
+      .theme-toggle-checkbox:focus ~ .theme-wrapper .theme-toggle-label {
+        outline: 2px dashed var(--accent);
+        outline-offset: 4px;
+        border-radius: 4px;
+      }
+
+      body {
+        margin: 0;
+        padding: 0;
+        font-family:
+          -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica,
+          Arial, sans-serif;
+        line-height: 1.6;
+        /* Warna body dialihkan ke .theme-wrapper */
+      }
+
+      .container {
+        max-width: var(--max-width);
+        margin: 0 auto;
+        padding: 1.25rem;
+      }
+
+      header.site-header {
+        border-bottom: 1px solid var(--border);
+        padding: 1.5rem 1.25rem;
+        text-align: center;
+        transition: border-color 0.3s ease;
+      }
+
+      header.site-header h1 {
+        margin: 0 0 0.25rem;
+        font-size: 1.9rem;
+      }
+
+      header.site-header p {
+        margin: 0;
+        color: var(--muted);
+      }
+
+      /* ===== Navigation ===== */
+      nav.main-nav {
+        border-bottom: 1px solid var(--border);
+        background: var(--bg-alt);
+        transition:
+          background-color 0.3s ease,
+          border-color 0.3s ease;
+      }
+
+      nav.main-nav ul {
+        list-style: none;
+        margin: 0;
+        padding: 0.75rem 1.25rem;
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.5rem 1rem;
+        max-width: var(--max-width);
+        margin: 0 auto;
+      }
+
+      nav.main-nav a,
+      .theme-toggle-label {
+        color: var(--accent);
+        text-decoration: none;
+        font-size: 0.95rem;
+        cursor: pointer;
+      }
+
+      nav.main-nav a:hover,
+      nav.main-nav a:focus,
+      .theme-toggle-label:hover {
+        text-decoration: underline;
+      }
+
+      /* ===== General sections ===== */
+      section {
+        padding: 2rem 1.25rem;
+        border-bottom: 1px solid var(--border);
+        max-width: var(--max-width);
+        margin: 0 auto;
+        transition: border-color 0.3s ease;
+      }
+
+      section:last-of-type {
+        border-bottom: none;
+      }
+
+      section h2 {
+        font-size: 1.6rem;
+        margin-top: 0;
+        margin-bottom: 1rem;
+        color: var(--accent);
+      }
+
+      section h3 {
+        font-size: 1.3rem;
+        margin-bottom: 0.25rem;
+      }
+
+      /* ===== Fundamental Table Styling ===== */
+      table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-bottom: 1.25rem;
+      }
+
+      table:last-child {
+        margin-bottom: 0;
+      }
+
+      td {
+        padding: 8px;
+        border: 1px solid var(--border);
+        vertical-align: top;
+      }
+
+      td:first-child:not([colspan]) {
+        width: max-content;
+        font-weight: bold;
+      }
+
+      ul.plain {
+        padding-left: 1.25rem;
+        margin: 0;
+      }
+
+      a {
+        text-decoration: none;
+        color: var(--accent);
+      }
+
+      /* ===== Skills & projects grid: fallback to block if grid not supported ===== */
+      .grid {
+        display: block;
+      }
+
+      @supports (display: grid) {
+        .grid {
+          display: grid;
+          grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+          gap: 1rem;
+        }
+      }
+
+      .card {
+        border: 1px solid var(--border);
+        border-radius: 4px;
+        padding: 1rem;
+        margin-bottom: 1rem;
+        transition: border-color 0.3s ease;
+      }
+
+      @supports (display: grid) {
+        .card {
+          margin-bottom: 0;
+        }
+      }
+
+      .card h3 {
+        margin-top: 0;
+      }
+
+      .card img {
+        width: 100%;
+      }
+
+      .card .img-carousel {
+        border: 1px solid var(--border);
+        border-radius: 4px;
+        width: 100%;
+        height: 16rem;
+        overflow: auto;
+      }
+
+      details {
+        border: 1px solid var(--border);
+        border-radius: 4px;
+        padding: 0.75rem 1rem;
+        margin-bottom: 0.75rem;
+        transition: border-color 0.3s ease;
+      }
+
+      details summary {
+        cursor: pointer;
+        font-weight: 600;
+      }
+
+      details p {
+        margin-bottom: 0;
+      }
+
+      .btn {
+        display: inline-block;
+        padding: 0.5rem 1rem;
+        border: 1px solid var(--accent);
+        border-radius: 4px;
+        color: var(--accent);
+        text-decoration: none;
+        font-weight: 500;
+        margin: 0.2rem;
+        transition:
+          background-color 0.3s ease,
+          color 0.3s ease;
+      }
+
+      .btn:hover,
+      .btn:focus {
+        background: var(--accent);
+        color: var(--bg);
+      }
+
+      .judul-tabel {
+        background-color: var(--judul-tabel);
+        transition: background-color 0.3s ease;
+      }
+
+      footer.site-footer {
+        text-align: center;
+        padding: 1.5rem 1.25rem;
+        color: var(--muted);
+        font-size: 0.85rem;
+      }
+
+      .skip-link {
+        position: absolute;
+        left: -999px;
+        top: 0;
+        background: var(--accent);
+        color: var(--bg);
+        padding: 0.5rem 1rem;
+        z-index: 100;
+      }
+
+      .skip-link:focus {
+        left: 0.5rem;
+        top: 0.5rem;
+      }
+
+      @media print {
+        nav.main-nav,
+        .skip-link,
+        .theme-toggle-label {
+          display: none;
+        }
+        body,
+        .theme-wrapper {
+          color: #000;
+          background: #fff;
+        }
+        a {
+          color: #000;
+          text-decoration: underline;
+        }
+        section {
+          border-bottom: 1px solid #999;
+          page-break-inside: avoid;
+        }
+      }
+    </style>
+  </head>
+
+  <body>
+    <a href="#konten" class="skip-link">Skip to content</a>
+
+    <!-- CHECKBOX HACK INTI: Harus diletakkan sebelum pembungkus tema (.theme-wrapper) -->
+    <input
+      type="checkbox"
+      id="theme-toggle"
+      class="theme-toggle-checkbox"
+      aria-label="Toggle Dark Mode"
+    />
+
+    <!-- PEMBUNGKUS TEMA: Semua konten harus masuk ke dalam div ini -->
+    <div class="theme-wrapper">
+      <header
+        class="site-header"
+        id="atas"
+        title="Halaman ini murni dibuat tanpa javascript. Saya sengaja menciptakan halaman ini untuk kompatibilitas luas, mulai dari engine gecko, blink dan webkit, hingga browser tua yang sudah di ujung hayat. Di halaman ini saya mengutamakan informasi, bukan tampilan. So, enjoy the web!"
+      >
+        <h1>John</h1>
+        <p>Linux Administrator</p>
+      </header>
+
+      <nav class="main-nav" aria-label="Main navigation">
+        <ul>
+          <li>
+            <!-- TOMBOL GANTI TEMA: Diletakkan di dalam navigasi sebagai label -->
+            <label for="theme-toggle" class="theme-toggle-label"
+              >🌓 Ganti Tema</label
+            >
+          </li>
+          <li><a href="../eng/">View in English</a></li>
+          <li><a href="#perkenalan">Perkenalan</a></li>
+          <li><a href="#pengalamankerja">Pengalaman Kerja</a></li>
+          <li><a href="#pendidikan">Pendidikan</a></li>
+          <li><a href="#sertifikasi">Sertifikasi</a></li>
+          <li><a href="#keahlian">Kemampuan</a></li>
+          <li><a href="#proyek">Proyek</a></li>
+          <li><a href="#resume">Resume</a></li>
+          <li><a href="#faq">FAQ</a></li>
+          <li><a href="#kontak">Kontak</a></li>
+          <li><a href="#medsos">Media Sosial</a></li>
+          <li><a href="../../">Beranda</a></li>
+        </ul>
+      </nav>
+
+      <main id="konten">
+        <section id="perkenalan" aria-labelledby="perkenalan-judul">
+          <h2 id="perkenalan-judul"><a href="#atas">Perkenalan</a></h2>
+          <p>Hai! Perkenalkan, saya John</p>
+        </section>
+
+        <section id="pengalamankerja" aria-labelledby="pengalaman-judul">
+          <h2 id="pengalaman-judul"><a href="#atas">Pengalaman Kerja</a></h2>
+          <table>
+            <tr>
+              <td colspan="2" class="judul-tabel" id="braja">
+                <strong>Lorem, ipsum dolor.</strong>
+              </td>
+            </tr>
+            <tr>
+              <td>Instansi:</td>
+              <td>Lorem ipsum dolor sit amet.</td>
+            </tr>
+            <tr>
+              <td>Waktu:</td>
+              <td>21 Juli 2025 - 5 Desember 2025</td>
+            </tr>
+            <tr>
+              <td>Lokasi:</td>
+              <td>Lorem ipsum dolor sit.</td>
+            </tr>
+            <tr>
+              <td colspan="2">
+                <p>
+                  Lorem ipsum dolor, sit amet consectetur adipisicing elit. Quam
+                  accusamus laboriosam esse.
+                </p>
+              </td>
+            </tr>
+          </table>
+        </section>
+
+        <section id="pendidikan" aria-labelledby="pendidikan-judul">
+          <h2 id="pendidikan-judul"><a href="#atas">Pendidikan</a></h2>
+
+          <table>
+            <tr>
+              <td colspan="2" class="judul-tabel">
+                <strong>Lorem, ipsum dolor.</strong>
+              </td>
+            </tr>
+            <tr>
+              <td>Instansi:</td>
+              <td>
+                <a href="#">Lorem ipsum dolor sit.</a>
+              </td>
+            </tr>
+            <tr>
+              <td>Waktu:</td>
+              <td>Lorem, ipsum dolor.</td>
+            </tr>
+            <tr>
+              <td>Lokasi:</td>
+              <td>
+                <a href="#">Lorem, ipsum dolor.</a>
+              </td>
+            </tr>
+            <tr>
+              <td>Magang:</td>
+              <td><a href="#b">Lorem ipsum dolor sit.</a></td>
+            </tr>
+            <tr>
+              <td colspan="2">
+                Lorem ipsum dolor sit amet consectetur adipisicing elit. Iure
+                laboriosam illum corrupti. Velit, praesentium.
+              </td>
+            </tr>
+          </table>
+        </section>
+
+        <section id="sertifikasi" aria-labelledby="sertifikasi-judul">
+          <h2 id="sertifikasi-judul"><a href="#atas">Sertifikasi</a></h2>
+
+          <table>
+            <tr>
+              <td colspan="2" class="judul-tabel">
+                <strong>Lorem ipsum dolor sit.</strong>
+              </td>
+            </tr>
+            <tr>
+              <td>Penerbit:</td>
+              <td>
+                <a href="#">Lorem ipsum dolor sit.</a>
+              </td>
+            </tr>
+            <tr>
+              <td>Terbit:</td>
+              <td>Lorem, ipsum dolor.</td>
+            </tr>
+            <tr>
+              <td>Berlaku hingga:</td>
+              <td>Lorem, ipsum dolor.</td>
+            </tr>
+            <tr>
+              <td>Lokasi:</td>
+              <td>
+                <a href="">Lorem ipsum dolor sit amet.</a>
+              </td>
+            </tr>
+            <tr>
+              <td>Skor:</td>
+              <td>000</td>
+            </tr>
+            <tr>
+              <td>Nomor Sertifikat:</td>
+              <td>Lorem ipsum dolor sit.</td>
+            </tr>
+
+            <tr style="text-align: center">
+              <td colspan="2">
+                <a
+                  href="../../certificates/certificate1/"
+                  target="_self"
+                  class="btn"
+                  ><i>Lihat Sertifikat</i></a
+                >
+              </td>
+            </tr>
+          </table>
+        </section>
+
+        <section id="keahlian" aria-labelledby="keahlian-judul">
+          <h2 id="keahlian-judul">
+            <a href="#atas">Kemampuan &amp; Kompetensi</a>
+          </h2>
+          <div class="grid">
+            <div class="card">
+              <h3>Tools &amp; Platforms</h3>
+              <h4>Development</h4>
+              <ul class="plain">
+                <li>Git</li>
+                <li>Codeberg</li>
+                <li>Podman</li>
+                <li>Docker</li>
+                <li>VS Codium</li>
+                <li>Helix (CLI Text Editor)</li>
+                <li>PlatfromIO</li>
+              </ul>
+              <h4>System & Infrastructure</h4>
+              <ul class="plain">
+                <li>Linux Fedora 44 (Daily Driver)</li>
+                <li>Linux Ubuntu Server 26.04 (Homelab)</li>
+              </ul>
+              <h4>Content Creation</h4>
+              <ul class="plain">
+                <li>Inkscape (Vector Editor)</li>
+                <li>KdenLive (Video Editor)</li>
+                <li>OBS (Open Broadcaster Software)</li>
+              </ul>
+              <h4>Productivity</h4>
+              <ul class="plain">
+                <li>OnlyOffice</li>
+              </ul>
+            </div>
+            <div class="card">
+              <h3>Electronics &amp; Embedded</h3>
+              <ul class="plain">
+                <li>Mikrokontroler (ESP32, Arduino Mega)</li>
+              </ul>
+            </div>
+            <div class="card">
+              <h3>System & Infrastructure</h3>
+              <ul class="plain">
+                <li></li>
+              </ul>
+            </div>
+          </div>
+        </section>
+
+        <section id="proyek" aria-labelledby="proyek-judul">
+          <h2 id="proyek-judul"><a href="#atas">Proyek</a></h2>
+          <div class="grid">
+            <div class="card">
+              <h3>Running LED</h3>
+              <div class="img-carousel">
+                <img src="../../media-global/gambar-uji.jpg" alt="gambar uji" />
+                <img src="../../media-global/gambar-uji.jpg" alt="gambar uji" />
+                <img src="../../media-global/gambar-uji.jpg" alt="gambar uji" />
+                <img src="../../media-global/gambar-uji.jpg" alt="gambar uji" />
+              </div>
+              <p>Rancangan tangan sendiri</p>
+              <p>
+                <a href="#"><i>Lihat detail</i></a>
+              </p>
+            </div>
+          </div>
+        </section>
+
+        <section id="resume" aria-labelledby="resume-judul">
+          <h2 id="resume-judul"><a href="#atas">Resume</a></h2>
+          <a class="btn" href="../../resume/ind/">Lihat Resume (PDF)</a>
+          <a class="btn" href="../../resume/ind/resume.pdf" download
+            >Unduh Resume (PDF)</a
+          >
+        </section>
+
+        <section id="faq" aria-labelledby="faq-judul">
+          <h2 id="faq-judul"><a href="#atas">FAQ</a></h2>
+
+          <details>
+            <summary>Apakah Anda tersedia untuk proyek freelance?</summary>
+            <p>Jawab pertanyaan ini sesuai kondisi Anda.</p>
+          </details>
+
+          <details>
+            <summary>Teknologi apa yang paling Anda kuasai?</summary>
+            <p>Jawaban singkat mengarahkan ke bagian Keahlian di atas.</p>
+          </details>
+        </section>
+
+        <section id="kontak" aria-labelledby="kontak-judul">
+          <h2 id="kontak-judul"><a href="#atas">Kontak</a></h2>
+          <ul class="plain">
+            <li>
+              LinkedIn:
+              <a href="#">Lorem, ipsum dolor.</a>
+            </li>
+          </ul>
+        </section>
+
+        <section id="medsos">
+          <h2><a href="#atas">Link Lainnya</a></h2>
+          <ul class="plain">
+            <li>
+              Codeberg:
+              <a href="">codeberg.org/</a>
+            </li>
+          </ul>
+        </section>
+      </main>
+
+      <footer class="site-footer">
+        <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Error!</p>
+      </footer>
+    </div>
+  </body>
+</html>
