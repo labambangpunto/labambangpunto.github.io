@@ -8,6 +8,7 @@
       content="Situs portofolio resmi milik Pengembang Web Budi Santoso."
     />
     <title>Portofolio | Budi Santoso</title>
+
     <link rel="icon" type="image/svg+xml" href="mai-kat.svg" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -35,6 +36,13 @@
         --max-width-content: 800px;
       }
 
+      /* Light Mode Variables (Triggered via JS) */
+      body.light-mode {
+        --primary-color: #f5f5f5; /* Off-white background */
+        --secondary-color: #0a0a0a; /* Black text */
+        --accent-color: #008f7a; /* Darker cyan for better contrast on light bg */
+      }
+
       /* Basic Reset */
       *,
       *::before,
@@ -44,18 +52,19 @@
         padding: 0;
       }
 
-      /* Body Styling */
       body {
         background-color: var(--primary-color);
         color: var(--secondary-color);
         font-family: var(--font-main);
         line-height: 1.6;
-        font-size: 1.25rem; /* Larger base font size for the big/bold requirement */
+        font-size: 1.25rem;
         -webkit-font-smoothing: antialiased;
         -moz-osx-font-smoothing: grayscale;
+        transition:
+          background-color 0.4s ease,
+          color 0.4s ease; /* Smooth dark/light transition */
       }
 
-      /* Container for limiting width and centering */
       body > nav,
       body > main,
       body > footer {
@@ -64,20 +73,19 @@
         padding: var(--spacing-md);
       }
 
-      /* Typography specifics */
       h1,
       h2,
       h3,
       h4,
       h5,
       h6 {
-        font-weight: 800; /* Bold */
+        font-weight: 800;
         line-height: 1.2;
         margin-bottom: var(--spacing-sm);
       }
 
       h1 {
-        font-size: clamp(3rem, 8vw, 5rem); /* Very large, responsive H1 */
+        font-size: clamp(3rem, 8vw, 5rem);
         letter-spacing: -0.05em;
         margin-bottom: var(--spacing-md);
         color: var(--accent-color);
@@ -93,27 +101,23 @@
       }
 
       h2 a {
-        text-decoration: none; /* Hide link underline in headings */
+        text-decoration: none;
         color: inherit;
       }
-
       h2 span {
         color: var(--accent-color);
         margin-right: 0.5rem;
       }
-
       h3 {
         font-size: 1.75rem;
         margin-top: var(--spacing-md);
       }
-
       p {
         margin-bottom: var(--spacing-md);
         font-weight: 300;
         font-size: 1.25rem;
       }
 
-      /* Links */
       a {
         color: var(--accent-color);
         text-decoration-thickness: 2px;
@@ -122,27 +126,25 @@
           color 0.3s ease,
           text-decoration-color 0.3s ease;
       }
-
       a:hover,
       a:focus {
         color: var(--secondary-color);
         text-decoration-color: var(--secondary-color);
       }
 
-      /* Lists */
       ul,
       ol {
         margin-bottom: var(--spacing-md);
         padding-left: 2rem;
       }
-
       li {
         margin-bottom: 0.5rem;
       }
 
-      /* Hero Section (Header) */
+      /* Hero Section (Header) - Full Screen */
       header#top {
-        min-height: 100vh; /* Full viewport height */
+        min-height: 100vh;
+        width: 100%;
         display: flex;
         flex-direction: column;
         justify-content: center;
@@ -153,7 +155,7 @@
       }
 
       header#top img {
-        border-radius: 0; /* Sharp corners */
+        border-radius: 0;
         border: 3px solid var(--accent-color);
         margin-bottom: var(--spacing-md);
         object-fit: cover;
@@ -166,12 +168,16 @@
         max-width: 600px;
       }
 
-      /* Navigation */
+      /* Static Navigation (Fallback when JS is off) */
       nav {
         background: rgba(255, 255, 255, 0.05);
         padding: var(--spacing-lg) !important;
-        border-radius: 0; /* Sharp corners */
+        border-radius: 0;
         margin-bottom: var(--spacing-xl) !important;
+        transition: background-color 0.3s ease;
+      }
+      body.light-mode nav {
+        background: rgba(0, 0, 0, 0.05);
       }
 
       nav ul {
@@ -181,7 +187,6 @@
         grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
         gap: 1rem;
       }
-
       nav a {
         display: block;
         padding: 0.5rem 0;
@@ -192,52 +197,79 @@
         padding-left: 10px;
         transition: all 0.2s ease;
       }
-
       nav a:hover {
         border-left-color: var(--accent-color);
         color: var(--secondary-color);
-        padding-left: 15px; /* Slight indent on hover */
+        padding-left: 15px;
       }
 
-      /* Main Content Areas */
       section {
         margin-bottom: var(--spacing-xl);
       }
 
-      article {
+      /* Article & Skill Card shared box styles */
+      article,
+      .skill-card {
+        border: 1px solid rgba(150, 150, 150, 0.2);
+        padding: 1.5rem;
+        transition: border-color 0.3s ease;
         margin-bottom: var(--spacing-lg);
-        padding-left: 1rem;
-        border-left: 1px solid rgba(255, 255, 255, 0.2);
+        border-radius: 0; /* Sharp corners */
+      }
+      body.light-mode article,
+      body.light-mode .skill-card {
+        border-color: rgba(0, 0, 0, 0.15);
       }
 
-      /* Tables */
+      /* Hover Outline */
+      main section article:hover,
+      .skill-card:hover {
+        border: 3px solid var(--accent-color);
+      }
+
+      /* Skills Grid */
+      .skills-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        gap: 2rem;
+      }
+      .skills-grid .skill-card {
+        margin-bottom: 0;
+      }
+
       table {
         width: 100%;
         border-collapse: collapse;
         margin-bottom: var(--spacing-md);
         font-size: 1.1rem;
       }
-
       td,
       th {
         padding: 0.5rem;
         vertical-align: top;
       }
-
       td:first-child {
-        width: 120px; /* Fixed width for labels */
-        color: #aaa;
+        width: 120px;
+        color: #888;
+      }
+      body.light-mode td:first-child {
+        color: #555;
       }
 
       /* Details & Summary (FAQ) */
       details {
         margin-bottom: 1rem;
         background: rgba(255, 255, 255, 0.03);
-        border-radius: 0; /* Sharp corners */
-        border: 1px solid rgba(255, 255, 255, 0.1);
-        transition: border-color 0.3s ease; /* Add transition for smooth effect */
+        border-radius: 0;
+        border: 1px solid rgba(150, 150, 150, 0.1);
+        transition: border-color 0.3s ease;
+      }
+      body.light-mode details {
+        background: rgba(0, 0, 0, 0.03);
+        border-color: rgba(0, 0, 0, 0.15);
       }
 
+      /* Outline on click (open) for FAQ */
       details[open] {
         border: 3px solid var(--accent-color);
       }
@@ -250,135 +282,304 @@
         outline: none;
         color: var(--accent-color);
       }
-
       summary:hover {
         color: var(--secondary-color);
       }
-
       details p {
         padding: 0 1rem 1rem 1rem;
         margin-bottom: 0;
       }
 
-      /* Footer */
       footer {
         text-align: center;
-        border-top: 1px solid rgba(255, 255, 255, 0.1);
+        border-top: 1px solid rgba(150, 150, 150, 0.1);
         padding-top: var(--spacing-lg) !important;
         margin-top: var(--spacing-xl) !important;
         color: #888;
       }
 
-      /* Utility */
       ::selection {
         background-color: var(--accent-color);
-        color: var(--primary-color);
+        color: #0a0a0a;
       }
 
-      /* Tombol Aksi */
       .btn {
         display: inline-block;
         padding: 0.75rem 1.5rem;
         background-color: transparent;
         color: var(--accent-color);
         border: 2px solid var(--accent-color);
-        text-decoration: none !important; /* Menimpa garis bawah tautan bawaan */
+        text-decoration: none !important;
         font-weight: 700;
         font-size: 1.1rem;
+        border-radius: 0; /* Sharp corners */
+        --magnet-x: 0px;
+        --magnet-y: 0px;
+        transform: translate(var(--magnet-x), var(--magnet-y));
         transition:
           background-color 0.3s ease,
           color 0.3s ease,
-          transform 0.1s ease;
+          transform 0.2s cubic-bezier(0.25, 1, 0.5, 1);
         cursor: pointer;
         text-align: center;
+        will-change: transform;
       }
-
       .btn:hover,
       .btn:focus {
         background-color: var(--accent-color);
-        color: var(--primary-color) !important;
+        color: #0a0a0a !important;
       }
-
       .btn:active {
-        transform: scale(0.98); /* Efek ditekan */
+        transform: translate(var(--magnet-x), var(--magnet-y)) scale(0.98);
       }
-
-      /* Hover outline for articles and skill cards */
-      main section article,
-      .skill-card {
-        border: 1px solid rgba(255, 255, 255, 0.2); /* Default subtle border */
-        padding: 1.5rem; /* Add padding so content doesn't touch border */
-        transition: border-color 0.3s ease;
-        margin-bottom: var(--spacing-lg);
-      }
-
-      .skills-grid {
-        display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-        gap: 2rem;
-      }
-
-      .skills-grid .skill-card {
-        margin-bottom: 0; /* Remove bottom margin inside grid to rely on gap */
-      }
-
-      main section article:hover,
-      .skill-card:hover {
-        border: 3px solid var(--accent-color);
-      }
-
-      /* Adjust previous article styling that had left border only */
-      article {
-        /* padding-left: 1rem; */
-        /* border-left: 1px solid rgba(255, 255, 255, 0.2); */
-        margin-bottom: var(--spacing-lg);
+      body.light-mode .btn:hover {
+        color: #ffffff !important;
       }
 
       @media (max-width: 768px) {
         :root {
-          /* Mengurangi skala jarak secara global untuk layar kecil */
           --spacing-md: 1rem;
           --spacing-lg: 1.5rem;
           --spacing-xl: 2.5rem;
         }
-
-        /* Mengurangi padding kontainer utama */
         body > nav,
         body > main,
         body > footer,
         header#top {
           padding: 1rem;
         }
-
-        /* Memperkecil padding di dalam kotak artikel dan kartu keahlian */
         main section article,
         .skill-card {
           padding: 1rem;
         }
-
-        /* Penyesuaian khusus untuk Navigasi agar tidak terlalu memakan ruang vertikal */
         nav {
           padding: 1.25rem !important;
           margin-bottom: 2.5rem !important;
         }
-
         nav ul {
-          gap: 0.5rem; /* Merapatkan tautan daftar isi */
+          gap: 0.5rem;
         }
-
-        /* Mengurangi jarak gap pada grid keahlian */
         .skills-grid {
           gap: 1rem;
         }
-
-        /* Mengoptimalkan ruang pada Accordion FAQ */
         summary {
           padding: 0.75rem;
           font-size: 1.25rem;
         }
-
         details p {
           padding: 0 0.75rem 0.75rem 0.75rem;
+        }
+      }
+
+      /* --- Progressive Enhancement: Hamburger Menu & Controls --- */
+
+      /* Kontrol mode gelap/terjemahan disembunyikan jika JS mati */
+      .js-only-controls {
+        display: none;
+      }
+
+      body.js-enabled nav {
+        position: fixed;
+        top: 0;
+        right: -100%;
+        width: 320px;
+        max-width: 85vw;
+        height: 100vh;
+        background-color: var(--primary-color);
+        border-left: 3px solid var(--accent-color);
+        z-index: 999;
+        overflow-y: auto;
+        transition: right 0.4s cubic-bezier(0.77, 0, 0.175, 1);
+        margin: 0 !important;
+        padding: 2rem 1.5rem 6rem 1.5rem !important;
+        display: block;
+      }
+      body.js-enabled nav.is-open {
+        right: 0;
+        box-shadow: -10px 0 30px rgba(0, 0, 0, 0.8);
+      }
+      body.js-enabled nav ul {
+        display: flex;
+        flex-direction: column;
+        gap: 0.5rem;
+      }
+
+      /* Tombol Dark Mode & Terjemahan */
+      body.js-enabled .js-only-controls {
+        display: flex;
+        gap: 0.5rem;
+        margin-bottom: 2rem;
+        border-bottom: 1px solid rgba(150, 150, 150, 0.2);
+        padding-bottom: 1rem;
+      }
+      .nav-control-btn {
+        background: transparent;
+        color: var(--secondary-color);
+        border: 1px solid var(--accent-color);
+        padding: 0.5rem;
+        cursor: pointer;
+        font-family: inherit;
+        font-size: 0.9rem;
+        font-weight: bold;
+        flex: 1;
+        transition: all 0.3s ease;
+      }
+      .nav-control-btn:hover {
+        background: var(--accent-color);
+        color: var(--primary-color);
+      }
+
+      .nav-toggle {
+        display: none;
+      }
+      body.js-enabled .nav-toggle {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-around;
+        width: 55px;
+        height: 55px;
+        background: var(--primary-color);
+        border: 3px solid var(--accent-color);
+        position: fixed;
+        bottom: 20px;
+        right: 20px;
+        z-index: 1000;
+        cursor: pointer;
+        padding: 12px;
+        transition:
+          background 0.3s ease,
+          transform 0.1s ease;
+      }
+      body.js-enabled .nav-toggle:hover {
+        background-color: rgba(0, 241, 208, 0.1);
+      }
+      body.js-enabled .nav-toggle:active {
+        transform: scale(0.95);
+      }
+
+      .hamburger-line {
+        width: 100%;
+        height: 3px;
+        background-color: var(--accent-color);
+        transition: all 0.3s ease-in-out;
+        transform-origin: left;
+      }
+      .nav-toggle.is-active .hamburger-line:first-child {
+        transform: rotate(45deg);
+      }
+      .nav-toggle.is-active .hamburger-line:nth-child(2) {
+        opacity: 0;
+        transform: translateX(20px);
+      }
+      .nav-toggle.is-active .hamburger-line:nth-child(3) {
+        transform: rotate(-45deg);
+      }
+
+      @media (max-width: 768px) {
+        body.js-enabled .nav-toggle {
+          bottom: 15px;
+          right: 15px;
+          width: 45px;
+          height: 45px;
+          padding: 8px;
+        }
+        body.js-enabled nav {
+          width: 280px;
+          padding: 1.5rem 1rem 5rem 1rem !important;
+        }
+      }
+
+      /* --- Progressive Enhancement: Scroll Reveal --- */
+      body.js-enabled .reveal-item {
+        opacity: 0;
+        transform: translateY(30px);
+        transition:
+          opacity 0.6s ease-out,
+          transform 0.6s ease-out;
+        will-change: opacity, transform;
+      }
+      body.js-enabled .reveal-item.is-visible {
+        opacity: 1;
+        transform: translateY(0);
+      }
+      body.js-enabled .skills-grid .skill-card:nth-child(1) {
+        transition-delay: 0s;
+      }
+      body.js-enabled .skills-grid .skill-card:nth-child(2) {
+        transition-delay: 0.1s;
+      }
+      body.js-enabled .skills-grid .skill-card:nth-child(3) {
+        transition-delay: 0.2s;
+      }
+      body.js-enabled .skills-grid .skill-card:nth-child(4) {
+        transition-delay: 0.3s;
+      }
+
+      /* --- Progressive Enhancement: Cursor Canvas --- */
+      #cursor-canvas {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100vw;
+        height: 100vh;
+        pointer-events: none;
+        z-index: 9999;
+      }
+
+      /* --- Progressive Enhancement: Hero Mask Reveal --- */
+      body.js-enabled header#top > img,
+      body.js-enabled header#top > h1,
+      body.js-enabled header#top > p {
+        opacity: 0;
+      }
+      body.js-enabled header#top .hero-mask {
+        position: relative;
+        opacity: 0;
+        width: fit-content;
+        max-width: 100%;
+        animation: showContent 0.01s forwards;
+        animation-delay: calc(var(--delay) + 0.5s);
+      }
+      body.js-enabled header#top .hero-mask > * {
+        opacity: 1 !important;
+        margin-bottom: 0 !important;
+      }
+      body.js-enabled header#top .hero-mask::after {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: var(--accent-color);
+        transform: scaleX(0);
+        transform-origin: left;
+        z-index: 10;
+        pointer-events: none;
+        animation: revealBlock 1s cubic-bezier(0.77, 0, 0.175, 1) forwards;
+        animation-delay: var(--delay);
+      }
+      @keyframes showContent {
+        to {
+          opacity: 1;
+        }
+      }
+      @keyframes revealBlock {
+        0% {
+          transform: scaleX(0);
+          transform-origin: left;
+        }
+        49.9% {
+          transform: scaleX(1);
+          transform-origin: left;
+        }
+        50% {
+          transform: scaleX(1);
+          transform-origin: right;
+        }
+        100% {
+          transform: scaleX(0);
+          transform-origin: right;
         }
       }
     </style>
@@ -392,7 +593,9 @@
         height="150"
       />
       <h1>Budi Santoso</h1>
-      <p>Pengembang Web Berpijak pada Aksesibilitas dan Kinerja</p>
+      <p data-en="Web Developer Focused on Accessibility and Performance">
+        Pengembang Web Berpijak pada Aksesibilitas dan Kinerja
+      </p>
       <p>
         <a href="mailto:budi.santoso@example.com">Email</a> |
         <a href="https://linkedin.com" target="_blank" rel="noopener noreferrer"
@@ -406,32 +609,50 @@
     </header>
 
     <nav aria-label="Navigasi Utama">
-      <h2>Daftar Isi</h2>
+      <div class="js-only-controls">
+        <button id="theme-toggle" class="nav-control-btn">Terang</button>
+        <button id="lang-toggle" class="nav-control-btn">EN</button>
+      </div>
+      <h2 data-en="Table of Contents">Daftar Isi</h2>
       <ul>
-        <li><a href="#tentang-saya">1. Tentang Saya</a></li>
-        <li><a href="#proyek">2. Proyek</a></li>
-        <li><a href="#keahlian">3. Keahlian</a></li>
-        <li><a href="#pengalaman-kerja">4. Pengalaman Kerja</a></li>
-        <li><a href="#pendidikan">5. Pendidikan</a></li>
-        <li><a href="#sertifikasi">6. Sertifikasi</a></li>
-        <li><a href="#resume">7. Resume</a></li>
-        <li><a href="#faq">8. FAQ</a></li>
-        <li><a href="#kontak">9. Kontak</a></li>
+        <li>
+          <a href="#tentang-saya" data-en="1. About Me">1. Tentang Saya</a>
+        </li>
+        <li><a href="#proyek" data-en="2. Projects">2. Proyek</a></li>
+        <li><a href="#keahlian" data-en="3. Skills">3. Keahlian</a></li>
+        <li>
+          <a href="#pengalaman-kerja" data-en="4. Experience"
+            >4. Pengalaman Kerja</a
+          >
+        </li>
+        <li><a href="#pendidikan" data-en="5. Education">5. Pendidikan</a></li>
+        <li>
+          <a href="#sertifikasi" data-en="6. Certifications">6. Sertifikasi</a>
+        </li>
+        <li><a href="#resume" data-en="7. Resume">7. Resume</a></li>
+        <li><a href="#faq" data-en="8. FAQ">8. FAQ</a></li>
+        <li><a href="#kontak" data-en="9. Contact">9. Kontak</a></li>
       </ul>
     </nav>
 
     <main>
       <section id="tentang-saya">
         <h2>
-          <a href="#top"><span>1.</span> Tentang Saya</a>
+          <a href="#top"
+            ><span>1.</span> <span data-en="About Me">Tentang Saya</span></a
+          >
         </h2>
-        <p>
+        <p
+          data-en="Hello! I'm Budi, a web developer based in Surabaya, Indonesia. I have a deep passion for creating websites that are fast, accessible to everyone, and easy to maintain."
+        >
           Halo! Saya Budi, seorang pengembang web yang berdomisili di Surabaya,
           Indonesia. Saya memiliki ketertarikan yang mendalam dalam menciptakan
           situs web yang cepat, dapat diakses oleh semua orang, dan mudah
           dirawat.
         </p>
-        <p>
+        <p
+          data-en="My approach always starts with content and solid HTML structure, then enhancing it with visual design and interactivity. I believe the web should be inclusive and accessible from any device."
+        >
           Pendekatan saya selalu dimulai dari konten dan struktur HTML yang
           solid, kemudian meningkatkannya dengan desain visual dan
           interaktivitas. Saya percaya bahwa web harus inklusif dan dapat
@@ -441,28 +662,39 @@
 
       <section id="proyek">
         <h2>
-          <a href="#top"><span>2.</span> Proyek</a>
+          <a href="#top"
+            ><span>2.</span> <span data-en="Projects">Proyek</span></a
+          >
         </h2>
 
         <article>
-          <h3>Trainer Kit Motor Listrik</h3>
+          <h3 data-en="Electric Motor Trainer Kit">
+            Trainer Kit Motor Listrik
+          </h3>
           <p>
-            <strong>Peran:</strong> Pengembang Perangkat Keras &amp; Sistem
-            Kontrol | <strong>Tahun:</strong> 2025
+            <strong data-en="Role:">Peran:</strong>
+            <span data-en="Hardware & Control System Developer"
+              >Pengembang Perangkat Keras &amp; Sistem Kontrol</span
+            >
+            | <strong data-en="Year:">Tahun:</strong> 2025
           </p>
-          <p>
+          <p
+            data-en="Design and manufacture of an electric motor Trainer Kit simulator module for speed testing, current/voltage monitoring, and real-time motor control simulation."
+          >
             Perancangan dan pembuatan modul simulator *Trainer Kit* motor
             listrik untuk pengujian kecepatan, monitoring arus/tegangan, dan
             simulasi kendali motor secara real-time.
           </p>
           <ul>
-            <li>
+            <li
+              data-en="Technology: Microcontroller, Current & Speed Sensors, PWM Motor Driver, C/C++."
+            >
               Teknologi: Mikrokontroler, Sensor Arus &amp; Kecepatan, Driver
               Motor PWM, C/C++.
             </li>
           </ul>
           <p>
-            <a href="#" class="btn"
+            <a href="#" class="btn" data-en="View Schematic & Documentation"
               >Lihat Skematik &amp; Dokumentasi Trainer Kit</a
             >
           </p>
@@ -471,22 +703,29 @@
         <article>
           <h3>Running LED Display</h3>
           <p>
-            <strong>Peran:</strong> Pengembang Firmware &amp; Rangkaian |
-            <strong>Tahun:</strong> 2024
+            <strong data-en="Role:">Peran:</strong>
+            <span data-en="Firmware & Circuit Developer"
+              >Pengembang Firmware &amp; Rangkaian</span
+            >
+            | <strong data-en="Year:">Tahun:</strong> 2024
           </p>
-          <p>
+          <p
+            data-en="Creation of an interactive Running LED module with various bit shift modes and lighting animation patterns with adjustable energy."
+          >
             Pembuatan modul Running LED interaktif dengan berbagai mode
             pergeseran bit (*bit shift*) dan variasi pola animasi pencahayaan
             yang dapat disesuaikan energinya.
           </p>
           <ul>
-            <li>
+            <li
+              data-en="Technology: C/C++, Shift Register (74HC595), Electronic Circuit Schematics."
+            >
               Teknologi: Bahasa C/C++, Shift Register (74HC595), Skematik
               Rangkaian Elektronika.
             </li>
           </ul>
           <p>
-            <a href="#" class="btn"
+            <a href="#" class="btn" data-en="View Source Code on GitHub"
               >Lihat Kode Sumber &amp; Diagram Rangkaian di GitHub</a
             >
           </p>
@@ -495,16 +734,20 @@
 
       <section id="keahlian">
         <h2>
-          <a href="#top"><span>3.</span> Keahlian</a>
+          <a href="#top"
+            ><span>3.</span> <span data-en="Skills">Keahlian</span></a
+          >
         </h2>
-        <p>
+        <p data-en="Here is a list of tools, platforms, and software I use:">
           Berikut adalah daftar alat, platform, dan perangkat lunak yang saya
           gunakan:
         </p>
 
         <div class="skills-grid">
           <div class="skill-card">
-            <h3>Pengontrol Versi &amp; Kontainer</h3>
+            <h3 data-en="Version Control & Containers">
+              Pengontrol Versi &amp; Kontainer
+            </h3>
             <ul>
               <li>Git</li>
               <li>Codeberg</li>
@@ -512,27 +755,28 @@
               <li>Docker</li>
             </ul>
           </div>
-
           <div class="skill-card">
-            <h3>Editor &amp; Lingkungan Pengembang</h3>
+            <h3 data-en="Editors & Environments">
+              Editor &amp; Lingkungan Pengembang
+            </h3>
             <ul>
               <li>VS Codium</li>
               <li>Helix (CLI Text Editor)</li>
               <li>PlatformIO</li>
             </ul>
           </div>
-
           <div class="skill-card">
-            <h3>Desain &amp; Multimedia</h3>
+            <h3 data-en="Design & Multimedia">Desain &amp; Multimedia</h3>
             <ul>
               <li>Inkscape (Vector Editor)</li>
               <li>Kdenlive (Video Editor)</li>
               <li>OBS (Open Broadcaster Software)</li>
             </ul>
           </div>
-
           <div class="skill-card">
-            <h3>Produktivitas &amp; Perkantoran</h3>
+            <h3 data-en="Productivity & Office">
+              Produktivitas &amp; Perkantoran
+            </h3>
             <ul>
               <li>OnlyOffice</li>
             </ul>
@@ -542,27 +786,36 @@
 
       <section id="pengalaman-kerja">
         <h2>
-          <a href="#top"><span>4.</span> Pengalaman Kerja</a>
+          <a href="#top"
+            ><span>4.</span>
+            <span data-en="Experience">Pengalaman Kerja</span></a
+          >
         </h2>
         <article>
-          <h3>Sales Officer Kredit Multiguna</h3>
+          <h3 data-en="Multipurpose Credit Sales Officer">
+            Sales Officer Kredit Multiguna
+          </h3>
           <table>
             <tbody>
               <tr>
-                <td><strong>Instansi</strong></td>
+                <td data-en="Institution"><strong>Instansi</strong></td>
                 <td>: PT BPD</td>
               </tr>
               <tr>
-                <td><strong>Waktu</strong></td>
-                <td>: 18 Juli 2022 – 07 November 2022</td>
+                <td data-en="Time"><strong>Waktu</strong></td>
+                <td data-en=": July 18, 2022 – November 07, 2022">
+                  : 18 Juli 2022 – 07 November 2022
+                </td>
               </tr>
               <tr>
-                <td><strong>Lokasi</strong></td>
+                <td data-en="Location"><strong>Lokasi</strong></td>
                 <td>: Surabaya</td>
               </tr>
             </tbody>
           </table>
-          <p>
+          <p
+            data-en="Tracing and managing physical archives of customer credit files based on year, month, and individual folder structure for new application, verification, settlement, and bad credit needs."
+          >
             Menelusuri dan mengelola arsip fisik berkas kredit nasabah
             berdasarkan struktur tahun, bulan, dan map individu untuk kebutuhan
             pengajuan baru, verifikasi, pelunasan, hingga kredit bermasalah.
@@ -572,31 +825,37 @@
 
       <section id="pendidikan">
         <h2>
-          <a href="#top"><span>5.</span> Pendidikan</a>
+          <a href="#top"
+            ><span>5.</span> <span data-en="Education">Pendidikan</span></a
+          >
         </h2>
         <article>
-          <h3>D3 Teknik Elektronika</h3>
+          <h3 data-en="Associate Degree in Electronics Engineering">
+            D3 Teknik Elektronika
+          </h3>
           <table>
             <tbody>
               <tr>
-                <td><strong>Instansi</strong></td>
-                <td>: Politeknik Surabaya</td>
+                <td data-en="Institution"><strong>Instansi</strong></td>
+                <td data-en=": Surabaya Polytechnic">: Politeknik Surabaya</td>
               </tr>
               <tr>
-                <td><strong>Waktu</strong></td>
-                <td>: Juli 2023 – Sekarang</td>
+                <td data-en="Time"><strong>Waktu</strong></td>
+                <td data-en=": July 2023 – Present">: Juli 2023 – Sekarang</td>
               </tr>
               <tr>
-                <td><strong>Lokasi</strong></td>
-                <td>: Surabaya, Jawa Timur</td>
+                <td data-en="Location"><strong>Lokasi</strong></td>
+                <td data-en=": Surabaya, East Java">: Surabaya, Jawa Timur</td>
               </tr>
               <tr>
-                <td><strong>Magang</strong></td>
+                <td data-en="Internship"><strong>Magang</strong></td>
                 <td>: PT Panasonic</td>
               </tr>
             </tbody>
           </table>
-          <p>
+          <p
+            data-en="Studying electronics basics, embedded systems, and microcontroller programming. This background forms the basis of my interest in embedded development and IoT, which I now combine with software development."
+          >
             Mempelajari dasar elektronika, sistem embedded, dan pemrograman
             mikrokontroler. Latar belakang ini menjadi dasar ketertarikan saya
             pada embedded development dan IoT, yang kini saya gabungkan dengan
@@ -605,108 +864,64 @@
         </article>
 
         <article>
-          <h3>Teknik Komputer dan Jaringan</h3>
+          <h3 data-en="Computer and Network Engineering">
+            Teknik Komputer dan Jaringan
+          </h3>
           <table>
             <tbody>
               <tr>
-                <td><strong>Instansi</strong></td>
-                <td>: SMK Negeri 1 Surabaya</td>
+                <td data-en="Institution"><strong>Instansi</strong></td>
+                <td data-en=": State Vocational High School 1 Surabaya">
+                  : SMK Negeri 1 Surabaya
+                </td>
               </tr>
               <tr>
-                <td><strong>Waktu</strong></td>
-                <td>: Juli 2021 – Juli 2023</td>
-              </tr>
-              <tr>
-                <td><strong>Lokasi</strong></td>
-                <td>: Surabaya</td>
-              </tr>
-              <tr>
-                <td><strong>Magang</strong></td>
-                <td>: PT BPD</td>
+                <td data-en="Time"><strong>Waktu</strong></td>
+                <td data-en=": July 2021 – July 2023">
+                  : Juli 2021 – Juli 2023
+                </td>
               </tr>
             </tbody>
           </table>
-          <p>
+          <p
+            data-en="Studying computer network basics including topology, IP addresses, UTP and LAN cable installation, wireless networks, and network infrastructure administration such as DHCP, DNS, and simulations using Cisco Packet Tracer and Mikrotik."
+          >
             Mempelajari dasar jaringan komputer meliputi topologi, IP address,
             instalasi kabel UTP dan LAN, jaringan nirkabel, hingga administrasi
             infrastruktur jaringan seperti DHCP, DNS, dan simulasi menggunakan
             Cisco Packet Tracer serta Mikrotik.
-          </p>
-          <p>
-            UKK Mengonfigurasi router Mikrotik RB941-2nD-TC meliputi user, DHCP
-            client-server-pool, IPv4, hingga halaman login wireless akses point
-            agar perangkat pengguna terhubung internet, lalu diuji lisan oleh
-            penguji.
           </p>
         </article>
       </section>
 
       <section id="sertifikasi">
         <h2>
-          <a href="#top"><span>6.</span> Sertifikasi</a>
+          <a href="#top"
+            ><span>6.</span>
+            <span data-en="Certifications">Sertifikasi</span></a
+          >
         </h2>
-
         <article>
           <h3>English Proficiency Test</h3>
           <table>
             <tbody>
               <tr>
-                <td><strong>Penerbit</strong></td>
+                <td data-en="Issuer"><strong>Penerbit</strong></td>
                 <td>: Language and Culture Center</td>
               </tr>
               <tr>
-                <td><strong>Terbit</strong></td>
-                <td>: 31 Maret 2026</td>
-              </tr>
-              <tr>
-                <td><strong>Berlaku hingga</strong></td>
-                <td>: 31 Maret 2028</td>
-              </tr>
-              <tr>
-                <td><strong>Lokasi</strong></td>
-                <td>: Surabaya, Jawa Timur</td>
-              </tr>
-              <tr>
-                <td><strong>Skor</strong></td>
+                <td data-en="Score"><strong>Skor</strong></td>
                 <td>: 450</td>
               </tr>
-              <tr>
-                <td><strong>Nomor Sertifikat</strong></td>
-                <td>: -</td>
-              </tr>
             </tbody>
           </table>
           <p>
-            <a href="#" target="_blank" rel="noopener noreferrer" class="btn"
-              >Lihat Sertifikat</a
-            >
-          </p>
-        </article>
-
-        <article>
-          <h3>Latihan Keterampilan Manajemen Mahasiswa Tingkat Dasar 2024</h3>
-          <table>
-            <tbody>
-              <tr>
-                <td><strong>Penerbit</strong></td>
-                <td>: Badan Eksekutif Mahasiswa</td>
-              </tr>
-              <tr>
-                <td><strong>Terbit</strong></td>
-                <td>: 8 Mei 2024</td>
-              </tr>
-              <tr>
-                <td><strong>Lokasi</strong></td>
-                <td>: Surabaya, Jawa Timur</td>
-              </tr>
-              <tr>
-                <td><strong>Nomor Sertifikat</strong></td>
-                <td>: -</td>
-              </tr>
-            </tbody>
-          </table>
-          <p>
-            <a href="#" target="_blank" rel="noopener noreferrer" class="btn"
+            <a
+              href="#"
+              target="_blank"
+              rel="noopener noreferrer"
+              class="btn"
+              data-en="View Certificate"
               >Lihat Sertifikat</a
             >
           </p>
@@ -717,52 +932,65 @@
         <h2>
           <a href="#top"><span>7.</span> Resume</a>
         </h2>
-        <p>
+        <p
+          data-en="To see the full details of my career journey and skills, please download my official resume:"
+        >
           Untuk melihat detail lengkap perjalanan karir dan keahlian saya,
           silakan unduh *resume* resmi saya:
         </p>
-        <p><a href="#" download class="btn">Unduh Resume (PDF)</a></p>
+        <p>
+          <a href="#" download class="btn" data-en="Download Resume (PDF)"
+            >Unduh Resume (PDF)</a
+          >
+        </p>
       </section>
 
       <section id="faq">
         <h2>
           <a href="#top"
-            ><span>8.</span> FAQ (Pertanyaan yang Sering Diajukan)</a
+            ><span>8.</span> FAQ
+            <span data-en="(Frequently Asked Questions)"
+              >(Pertanyaan yang Sering Diajukan)</span
+            ></a
           >
         </h2>
         <details>
-          <summary>Apakah Anda menerima proyek lepas (*freelance*)?</summary>
-          <p>
+          <summary data-en="Do you accept freelance projects?">
+            Apakah Anda menerima proyek lepas (*freelance*)?
+          </summary>
+          <p
+            data-en="Yes, I currently accept part-time projects, especially those related to performance and accessibility optimization."
+          >
             Ya, saya saat ini menerima proyek paruh waktu, terutama yang
             berkaitan dengan optimalisasi kinerja dan aksesibilitas.
           </p>
         </details>
         <details>
-          <summary>
+          <summary
+            data-en="How long does it usually take you to complete a standard website?"
+          >
             Berapa lama biasanya waktu yang Anda butuhkan untuk menyelesaikan
             sebuah situs web standar?
           </summary>
-          <p>
+          <p
+            data-en="Depending on complexity, a standard corporate website typically takes around 3 to 6 weeks from design to launch."
+          >
             Tergantung pada kompleksitasnya, situs web perusahaan standar
             biasanya memakan waktu sekitar 3 hingga 6 minggu dari tahap
             perancangan hingga peluncuran.
-          </p>
-        </details>
-        <details>
-          <summary>Teknologi apa yang menjadi spesialisasi utama Anda?</summary>
-          <p>
-            Fokus utama saya adalah pada fondasi web dasar (HTML, CSS, Vanilla
-            JS) dan integrasinya dengan teknologi modern seperti ekosistem
-            React.
           </p>
         </details>
       </section>
 
       <section id="kontak">
         <h2>
-          <a href="#top"><span>9.</span> Kontak</a>
+          <a href="#top"
+            ><span>9.</span> <span data-en="Contact">Kontak</span></a
+          >
         </h2>
-        <p>
+        <p
+          data-en="Want to work together or just say hi? Please contact me via email or social media links below:"
+        >
           Ingin bekerja sama atau sekadar menyapa? Silakan hubungi saya melalui
           surel atau tautan media sosial di bawah ini:
         </p>
@@ -775,19 +1003,13 @@
           </li>
           <li>
             LinkedIn:
-            <a
-              href="https://linkedin.com"
-              target="_blank"
-              rel="noopener noreferrer"
+            <a href="https://linkedin.com" target="_blank"
               >linkedin.com/in/budisantoso</a
             >
           </li>
           <li>
             GitHub:
-            <a
-              href="https://github.com"
-              target="_blank"
-              rel="noopener noreferrer"
+            <a href="https://github.com" target="_blank"
               >github.com/budisantoso</a
             >
           </li>
@@ -797,10 +1019,196 @@
 
     <footer>
       <p>
-        <small
+        <small data-en="&copy; 2026 Budi Santoso. All Rights Reserved."
           >&copy; 2026 Budi Santoso. Hak Cipta Dilindungi Undang-Undang.</small
         >
       </p>
     </footer>
+
+    <script>
+      document.addEventListener("DOMContentLoaded", () => {
+        document.body.classList.add("js-enabled");
+
+        // --- Theme & Language Toggles ---
+        const themeToggleBtn = document.getElementById("theme-toggle");
+        themeToggleBtn.addEventListener("click", () => {
+          document.body.classList.toggle("light-mode");
+          const isLight = document.body.classList.contains("light-mode");
+          themeToggleBtn.innerText = isLight ? "Gelap" : "Terang";
+          // Optionally map text via active language:
+          if (isEnglish) {
+            themeToggleBtn.innerText = isLight ? "Dark Mode" : "Light Mode";
+          }
+        });
+
+        let isEnglish = false;
+        const langToggleBtn = document.getElementById("lang-toggle");
+        const translatableElements = document.querySelectorAll("[data-en]");
+
+        langToggleBtn.addEventListener("click", () => {
+          isEnglish = !isEnglish;
+          langToggleBtn.innerText = isEnglish ? "ID" : "EN";
+
+          // Update theme button text to match language
+          const isLight = document.body.classList.contains("light-mode");
+          if (isEnglish) {
+            themeToggleBtn.innerText = isLight ? "Dark Mode" : "Light Mode";
+          } else {
+            themeToggleBtn.innerText = isLight ? "Gelap" : "Terang";
+          }
+
+          translatableElements.forEach((el) => {
+            if (isEnglish) {
+              if (!el.hasAttribute("data-id")) {
+                el.setAttribute("data-id", el.innerHTML);
+              }
+              el.innerHTML = el.getAttribute("data-en");
+            } else {
+              if (el.hasAttribute("data-id")) {
+                el.innerHTML = el.getAttribute("data-id");
+              }
+            }
+          });
+        });
+
+        // --- Hero Mask Reveal ---
+        const heroChildren = document.querySelectorAll(
+          "header#top > img, header#top > h1, header#top > p",
+        );
+        heroChildren.forEach((el, index) => {
+          const wrapper = document.createElement("div");
+          wrapper.classList.add("hero-mask");
+          wrapper.style.setProperty("--delay", `${0.2 + index * 0.25}s`);
+
+          const computedStyle = window.getComputedStyle(el);
+          wrapper.style.marginBottom = computedStyle.marginBottom;
+
+          el.parentNode.insertBefore(wrapper, el);
+          wrapper.appendChild(el);
+        });
+
+        // --- Hamburger Menu ---
+        const toggleBtn = document.createElement("button");
+        toggleBtn.setAttribute("aria-label", "Buka menu navigasi");
+        toggleBtn.classList.add("nav-toggle");
+        toggleBtn.innerHTML = `<span class="hamburger-line"></span><span class="hamburger-line"></span><span class="hamburger-line"></span>`;
+        document.body.appendChild(toggleBtn);
+
+        const nav = document.querySelector("nav");
+        const navLinks = nav.querySelectorAll("a");
+
+        toggleBtn.addEventListener("click", () => {
+          nav.classList.toggle("is-open");
+          toggleBtn.classList.toggle("is-active");
+        });
+
+        navLinks.forEach((link) => {
+          link.addEventListener("click", () => {
+            nav.classList.remove("is-open");
+            toggleBtn.classList.remove("is-active");
+          });
+        });
+
+        // --- Scroll Reveal ---
+        const revealElements = document.querySelectorAll(
+          "section > h2, section > p, article, .skill-card, details",
+        );
+        revealElements.forEach((el) => el.classList.add("reveal-item"));
+
+        const revealObserver = new IntersectionObserver(
+          (entries, observer) => {
+            entries.forEach((entry) => {
+              if (entry.isIntersecting) {
+                entry.target.classList.add("is-visible");
+                observer.unobserve(entry.target);
+              }
+            });
+          },
+          { rootMargin: "0px 0px -50px 0px", threshold: 0.1 },
+        );
+        revealElements.forEach((el) => revealObserver.observe(el));
+
+        // --- Magnetic Button Effect ---
+        const magneticButtons = document.querySelectorAll(".btn");
+        magneticButtons.forEach((btn) => {
+          btn.addEventListener("mousemove", (e) => {
+            const rect = btn.getBoundingClientRect();
+            const x = e.clientX - rect.left - rect.width / 2;
+            const y = e.clientY - rect.top - rect.height / 2;
+            btn.style.setProperty("--magnet-x", `${x * 0.3}px`);
+            btn.style.setProperty("--magnet-y", `${y * 0.3}px`);
+          });
+          btn.addEventListener("mouseleave", () => {
+            btn.style.setProperty("--magnet-x", "0px");
+            btn.style.setProperty("--magnet-y", "0px");
+          });
+        });
+
+        // --- STREAMING_CHUNK:Initializing Canvas Cursor Follower ---
+        const canvas = document.createElement("canvas");
+        canvas.id = "cursor-canvas";
+        document.body.appendChild(canvas);
+        const ctx = canvas.getContext("2d");
+
+        let width = window.innerWidth;
+        let height = window.innerHeight;
+        canvas.width = width;
+        canvas.height = height;
+
+        window.addEventListener("resize", () => {
+          width = window.innerWidth;
+          height = window.innerHeight;
+          canvas.width = width;
+          canvas.height = height;
+        });
+
+        let mouse = { x: width / 2, y: height / 2, isActive: false };
+        let trail = [];
+        const maxTrailAge = 35;
+
+        window.addEventListener("mousemove", (e) => {
+          mouse.x = e.clientX;
+          mouse.y = e.clientY;
+          mouse.isActive = true;
+          trail.push({ x: e.clientX, y: e.clientY, age: 0 });
+        });
+
+        function renderCursor() {
+          ctx.clearRect(0, 0, width, height);
+
+          if (mouse.isActive) {
+            for (let i = 0; i < trail.length; i++) trail[i].age += 1;
+            trail = trail.filter((t) => t.age < maxTrailAge);
+
+            ctx.lineCap = "round";
+            ctx.lineJoin = "round";
+
+            for (let i = 1; i < trail.length; i++) {
+              const pt = trail[i];
+              const prevPt = trail[i - 1];
+              const life = 1 - pt.age / maxTrailAge;
+
+              ctx.beginPath();
+              ctx.moveTo(prevPt.x, prevPt.y);
+              ctx.lineTo(pt.x, pt.y);
+
+              ctx.lineWidth = 18 * Math.pow(life, 1.5);
+
+              // Menyesuaikan warna berdasarkan tema yang aktif
+              const isLight = document.body.classList.contains("light-mode");
+              if (isLight) {
+                ctx.strokeStyle = `rgba(0, 143, 122, ${life * 0.4})`; // Gelap untuk light mode
+              } else {
+                ctx.strokeStyle = `rgba(0, 241, 208, ${life * 0.4})`; // Terang untuk dark mode
+              }
+
+              ctx.stroke();
+            }
+          }
+          requestAnimationFrame(renderCursor);
+        }
+        renderCursor();
+      });
+    </script>
   </body>
 </html>
