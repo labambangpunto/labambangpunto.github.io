@@ -104,7 +104,7 @@
         text-decoration: none;
         color: inherit;
       }
-      h2 span {
+      h2 span:first-child {
         color: var(--accent-color);
         margin-right: 0.5rem;
       }
@@ -146,9 +146,10 @@
         min-height: 100vh;
         width: 100%;
         display: flex;
-        flex-direction: column;
-        justify-content: center;
-        align-items: flex-start;
+        flex-direction: row;
+        justify-content: flex-start;
+        align-items: center;
+        gap: var(--spacing-lg);
         padding: var(--spacing-md);
         max-width: var(--max-width-content);
         margin: 0 auto;
@@ -157,10 +158,17 @@
       header#top img {
         border-radius: 0;
         border: 3px solid var(--accent-color);
-        margin-bottom: var(--spacing-md);
+        margin-bottom: 0;
         object-fit: cover;
         width: 150px;
         height: 150px;
+        flex-shrink: 0;
+      }
+
+      .hero-text-col {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
       }
 
       header p {
@@ -215,6 +223,9 @@
         transition: border-color 0.3s ease;
         margin-bottom: var(--spacing-lg);
         border-radius: 0; /* Sharp corners */
+        background-color: var(--primary-color);
+        position: relative;
+        z-index: 1;
       }
       body.light-mode article,
       body.light-mode .skill-card {
@@ -259,13 +270,14 @@
       /* Details & Summary (FAQ) */
       details {
         margin-bottom: 1rem;
-        background: rgba(255, 255, 255, 0.03);
+        background-color: var(--primary-color);
         border-radius: 0;
         border: 1px solid rgba(150, 150, 150, 0.1);
         transition: border-color 0.3s ease;
+        position: relative;
+        z-index: 1;
       }
       body.light-mode details {
-        background: rgba(0, 0, 0, 0.03);
         border-color: rgba(0, 0, 0, 0.15);
       }
 
@@ -306,7 +318,7 @@
       .btn {
         display: inline-block;
         padding: 0.75rem 1.5rem;
-        background-color: transparent;
+        background-color: var(--primary-color);
         color: var(--accent-color);
         border: 2px solid var(--accent-color);
         text-decoration: none !important;
@@ -336,6 +348,13 @@
         color: #ffffff !important;
       }
 
+      .contact-btn-group {
+        display: flex;
+        gap: 1rem;
+        flex-wrap: wrap;
+        margin-top: 1rem;
+      }
+
       @media (max-width: 768px) {
         :root {
           --spacing-md: 1rem;
@@ -347,6 +366,12 @@
         body > footer,
         header#top {
           padding: 1rem;
+        }
+        header#top {
+          flex-direction: column;
+          align-items: flex-start;
+          justify-content: center;
+          gap: 1.5rem;
         }
         main section article,
         .skill-card {
@@ -396,7 +421,7 @@
       }
       body.js-enabled nav.is-open {
         right: 0;
-        box-shadow: -10px 0 30px rgba(0, 0, 0, 0.8);
+        /* box-shadow: -10px 0 30px rgba(0, 0, 0, 0.8); */
       }
       body.js-enabled nav ul {
         display: flex;
@@ -492,7 +517,7 @@
       /* --- Progressive Enhancement: Scroll Reveal --- */
       body.js-enabled .reveal-item {
         opacity: 0;
-        transform: translateY(30px);
+        transform: translateX(-30px);
         transition:
           opacity 0.6s ease-out,
           transform 0.6s ease-out;
@@ -527,9 +552,9 @@
       }
 
       /* --- Progressive Enhancement: Hero Mask Reveal --- */
-      body.js-enabled header#top > img,
-      body.js-enabled header#top > h1,
-      body.js-enabled header#top > p {
+      body.js-enabled header#top img,
+      body.js-enabled header#top h1,
+      body.js-enabled header#top p {
         opacity: 0;
       }
       body.js-enabled header#top .hero-mask {
@@ -592,20 +617,29 @@
         width="150"
         height="150"
       />
-      <h1>Budi Santoso</h1>
-      <p data-en="Web Developer Focused on Accessibility and Performance">
-        Pengembang Web Berpijak pada Aksesibilitas dan Kinerja
-      </p>
-      <p>
-        <a href="mailto:budi.santoso@example.com">Email</a> |
-        <a href="https://linkedin.com" target="_blank" rel="noopener noreferrer"
-          >LinkedIn</a
-        >
-        |
-        <a href="https://github.com" target="_blank" rel="noopener noreferrer"
-          >GitHub</a
-        >
-      </p>
+      <div class="hero-text-col">
+        <h1>Budi Santoso</h1>
+        <p data-en="Web Developer Focused on Accessibility and Performance">
+          Pengembang Web Berpijak pada Aksesibilitas dan Kinerja
+        </p>
+        <p class="contact-btn-group">
+          <a href="mailto:budi.santoso@example.com" class="btn">Email</a>
+          <a
+            href="https://linkedin.com"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="btn"
+            >LinkedIn</a
+          >
+          <a
+            href="https://github.com"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="btn"
+            >GitHub</a
+          >
+        </p>
+      </div>
     </header>
 
     <nav aria-label="Navigasi Utama">
@@ -791,6 +825,45 @@
             <span data-en="Experience">Pengalaman Kerja</span></a
           >
         </h2>
+
+        <article>
+          <h3 data-en="Electronics Division">Divisi Elektronika</h3>
+          <table>
+            <tbody>
+              <tr>
+                <td data-en="Institution"><strong>Instansi</strong></td>
+                <td>: PT Molis</td>
+              </tr>
+              <tr>
+                <td data-en="Time"><strong>Waktu</strong></td>
+                <td data-en=": July 21, 2025 - December 5, 2025">
+                  : 21 Juli 2025 - 5 Desember 2025
+                </td>
+              </tr>
+              <tr>
+                <td data-en="Location"><strong>Lokasi</strong></td>
+                <td data-en=": Surabaya, East Java">: Surabaya, Jawa Timur</td>
+              </tr>
+            </tbody>
+          </table>
+          <p
+            data-en="Operating the BRT Super Dyno 50LA machine using Super Dyno 50L software to test the performance of electric motors, generating data on Power (kW), Torque (Nm), RPM, and speed to form the motor's efficiency characteristic curve."
+          >
+            Mengoperasikan mesin BRT Super Dyno 50LA menggunakan software Super
+            Dyno 50L untuk menguji unjuk kerja motor listrik, menghasilkan data
+            Daya (kW), Torsi (Nm), RPM, dan kecepatan guna membentuk kurva
+            karakteristik efisiensi motor.
+          </p>
+          <ul>
+            <li data-en="Main project: Electric Motorcycle Trainer Kit">
+              <strong>Proyek utama:</strong> Trainer Kit Sepeda Motor Listrik
+            </li>
+            <li data-en="Other projects: Electric Maze Buzz">
+              <strong>Proyek lain:</strong> Electric Maze Buzz
+            </li>
+          </ul>
+        </article>
+
         <article>
           <h3 data-en="Multipurpose Credit Sales Officer">
             Sales Officer Kredit Multiguna
@@ -926,6 +999,46 @@
             >
           </p>
         </article>
+
+        <article>
+          <h3 data-en="Basic Student Management Skills Training 2024">
+            Latihan Keterampilan Manajemen Mahasiswa Tingkat Dasar 2024
+          </h3>
+          <table>
+            <tbody>
+              <tr>
+                <td data-en="Issuer"><strong>Penerbit</strong></td>
+                <td data-en=": Student Executive Board">
+                  : Badan Eksekutif Mahasiswa
+                </td>
+              </tr>
+              <tr>
+                <td data-en="Issued"><strong>Terbit</strong></td>
+                <td data-en=": May 8, 2024">: 8 Mei 2024</td>
+              </tr>
+              <tr>
+                <td data-en="Location"><strong>Lokasi</strong></td>
+                <td data-en=": Surabaya, East Java">: Surabaya, Jawa Timur</td>
+              </tr>
+              <tr>
+                <td data-en="Certificate Number">
+                  <strong>Nomor Sertifikat</strong>
+                </td>
+                <td>: -</td>
+              </tr>
+            </tbody>
+          </table>
+          <p>
+            <a
+              href="#"
+              target="_blank"
+              rel="noopener noreferrer"
+              class="btn"
+              data-en="View Certificate"
+              >Lihat Sertifikat</a
+            >
+          </p>
+        </article>
       </section>
 
       <section id="resume">
@@ -994,26 +1107,23 @@
           Ingin bekerja sama atau sekadar menyapa? Silakan hubungi saya melalui
           surel atau tautan media sosial di bawah ini:
         </p>
-        <ul>
-          <li>
-            Email Direct:
-            <a href="mailto:budi.santoso@example.com"
-              >budi.santoso@example.com</a
-            >
-          </li>
-          <li>
-            LinkedIn:
-            <a href="https://linkedin.com" target="_blank"
-              >linkedin.com/in/budisantoso</a
-            >
-          </li>
-          <li>
-            GitHub:
-            <a href="https://github.com" target="_blank"
-              >github.com/budisantoso</a
-            >
-          </li>
-        </ul>
+        <div class="contact-btn-group">
+          <a href="mailto:budi.santoso@example.com" class="btn">Email</a>
+          <a
+            href="https://linkedin.com"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="btn"
+            >LinkedIn</a
+          >
+          <a
+            href="https://github.com"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="btn"
+            >GitHub</a
+          >
+        </div>
       </section>
     </main>
 
@@ -1073,7 +1183,7 @@
 
         // --- Hero Mask Reveal ---
         const heroChildren = document.querySelectorAll(
-          "header#top > img, header#top > h1, header#top > p",
+          "header#top img, header#top h1, header#top p",
         );
         heroChildren.forEach((el, index) => {
           const wrapper = document.createElement("div");
@@ -1208,6 +1318,124 @@
           requestAnimationFrame(renderCursor);
         }
         renderCursor();
+
+        // Mengatur body agar membuat 'stacking context' baru
+        // Ini mencegah canvas z-index:-1 tenggelam di bawah warna background body
+        document.body.style.isolation = "isolate";
+
+        const starCanvas = document.createElement("canvas");
+        starCanvas.id = "starfield";
+        Object.assign(starCanvas.style, {
+          position: "fixed",
+          top: "0",
+          left: "0",
+          width: "100vw",
+          height: "100vh",
+          pointerEvents: "none",
+          zIndex: "-1",
+        });
+        document.body.prepend(starCanvas);
+
+        const starCtx = starCanvas.getContext("2d");
+        let starW = window.innerWidth;
+        let starH = window.innerHeight;
+        starCanvas.width = starW;
+        starCanvas.height = starH;
+
+        // Membuat partikel tersebar merata menggunakan sistem grid (grid-based distribution)
+        const stars = [];
+        const cols = 15; // 15 kolom
+        const rows = 12; // 12 baris (Total 180 bintang)
+        const cellW = starW / cols;
+        const cellH = starH / rows;
+
+        for (let i = 0; i < cols; i++) {
+          for (let j = 0; j < rows; j++) {
+            stars.push({
+              // Koordinat ditugaskan secara acak tapi di dalam batas sel grid masing-masing
+              x: i * cellW + Math.random() * cellW,
+              y: j * cellH + Math.random() * cellH,
+              z: Math.random() * 2 + 0.5, // z = ukuran/kedalaman (0.5 hingga 2.5)
+              vx: (Math.random() - 0.5) * 0.03, // kecepatan alami horizontal (diperlambat)
+              vy: (Math.random() - 0.5) * 0.03, // kecepatan alami vertikal (diperlambat)
+            });
+          }
+        }
+
+        let parallaxX = 0;
+        let parallaxY = 0;
+
+        window.addEventListener("resize", () => {
+          starW = window.innerWidth;
+          starH = window.innerHeight;
+          starCanvas.width = starW;
+          starCanvas.height = starH;
+        });
+
+        function renderStarfield() {
+          starCtx.clearRect(0, 0, starW, starH);
+
+          // Menghitung target parallax berdasarkan posisi kursor (pengali diturunkan agar lebih lambat)
+          const targetX = (mouse.x - starW / 2) * 0.015;
+          const targetY = (mouse.y - starH / 2) * 0.015;
+
+          // Lerp (Linear Interpolation) untuk pergerakan transisi yang sangat mulus
+          parallaxX += (targetX - parallaxX) * 0.08;
+          parallaxY += (targetY - parallaxY) * 0.08;
+
+          const isLight = document.body.classList.contains("light-mode");
+
+          stars.forEach((star) => {
+            // Update posisi berdasarkan pergerakan mandiri + parallax mouse
+            // Mengubah tanda '-' menjadi '+' agar partikel mengikuti arah kursor
+            star.x += star.vx + parallaxX * star.z * 0.05;
+            star.y += star.vy + parallaxY * star.z * 0.05;
+
+            // Membungkus layar (diperlebar ke -50 dan +50 agar tepi layar tidak terlihat kosong)
+            if (star.x < -50) star.x = starW + 50;
+            if (star.x > starW + 50) star.x = -50;
+            if (star.y < -50) star.y = starH + 50;
+            if (star.y > starH + 50) star.y = -50;
+
+            starCtx.beginPath();
+
+            // Mewarnai bintang. Bintang besar (lebih dekat) diberi aksen warna
+            if (star.z > 2.2) {
+              starCtx.fillStyle = isLight
+                ? "rgba(0, 143, 122, 0.7)"
+                : "rgba(0, 241, 208, 0.7)";
+            } else {
+              starCtx.fillStyle = isLight
+                ? "rgba(0, 0, 0, 0.35)"
+                : "rgba(255, 255, 255, 0.35)";
+            }
+
+            starCtx.arc(star.x, star.y, star.z, 0, Math.PI * 2);
+            starCtx.fill();
+          });
+
+          requestAnimationFrame(renderStarfield);
+        }
+        renderStarfield();
+
+        // --- Progressive Enhancement: Dynamic Title ---
+        const daftarJudul = [
+          "Portofolio Saya",
+          "My Portfolio",
+          "내 포트폴리오",
+          "معرض أعمالي",
+          "我的作品集",
+          "私のポートフォリオ",
+          "Mi portafolio",
+          "Мое портфолио",
+          "Meu Portfólio",
+        ];
+        let titleIndex = 0;
+
+        setInterval(() => {
+          titleIndex = (titleIndex + 1) % daftarJudul.length;
+          document.title = daftarJudul[titleIndex] + " | Budi Santoso";
+        }, 10000); // 10000ms = 10 detik
       });
     </script>
   </body>
