@@ -86,7 +86,6 @@
 
       h1 {
         font-size: clamp(3rem, 8vw, 5rem);
-        letter-spacing: -0.05em;
         margin-bottom: var(--spacing-md);
         color: var(--accent-color);
       }
@@ -1277,6 +1276,25 @@
             nav.classList.remove("is-open");
             toggleBtn.classList.remove("is-active");
           });
+        });
+
+        // Kekuatan tombol escape
+        document.addEventListener("keydown", (e) => {
+          if (e.key === "Escape" && nav.classList.contains("is-open")) {
+            nav.classList.remove("is-open");
+            toggleBtn.classList.remove("is-active");
+          }
+        });
+
+        // --- Menutup sidebar jika klik di luar area sidebar ---
+        document.addEventListener("click", (e) => {
+          if (nav.classList.contains("is-open")) {
+            // Pastikan yang diklik bukan menu nav itu sendiri, dan bukan tombol hamburger
+            if (!nav.contains(e.target) && !toggleBtn.contains(e.target)) {
+              nav.classList.remove("is-open");
+              toggleBtn.classList.remove("is-active");
+            }
+          }
         });
 
         // --- Scroll Reveal ---
