@@ -233,8 +233,11 @@
 
       /* Hover Outline */
       main section article:hover,
-      .skill-card:hover {
+      .skill-card:hover,
+      body.light-mode article:hover,
+      body.light-mode .skill-card:hover {
         border: 3px solid var(--accent-color);
+        border-color: var(--accent-color);
       }
 
       /* Skills Grid */
@@ -281,8 +284,10 @@
       }
 
       /* Outline on click (open) for FAQ */
-      details[open] {
+      details[open],
+      body.light-mode details[open] {
         border: 3px solid var(--accent-color);
+        border-color: var(--accent-color);
       }
 
       summary {
@@ -1350,7 +1355,8 @@
           canvas.height = height;
         });
 
-        let mouse = { x: width / 2, y: height / 2, isActive: false };
+        // Mengubah koordinat awal ke pojok kanan bawah (width, height) alih-alih di tengah
+        let mouse = { x: width, y: height, isActive: false };
         let trail = [];
         const maxTrailAge = 35;
 
